@@ -50,6 +50,7 @@ const getItems = () => {
 const getImages = (items) => {
 
     items.forEach((item, index) => {
+        console.log(itemsPath+"\\"+item.name+".png")
         items[index].image = sharp(itemsPath+"\\"+item.name+".png")
     });
 
@@ -85,9 +86,9 @@ const produceMenu = async (items) => {
     var menu;
 
     if (n_items == 8) {
-        var menu = sharp(imagesPath+"\\BackgroundOito.png");
+        var menu = sharp(imagesPath+"BackgroundOito.png");
     }else if (n_items == 9) {
-        var menu = sharp(imagesPath+"\\BackgroundNove.png");
+        var menu = sharp(imagesPath+"BackgroundNove.png");
     }
 
     const metadata = await menu.metadata();
