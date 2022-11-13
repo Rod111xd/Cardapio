@@ -85,11 +85,11 @@ const produceMenu = async (items) => {
 
     var menu;
 
-    console.log(imagesPath+"\\Background 8.png");
+    console.log(imagesPath+"\\8Background.png");
     if (n_items == 8) {
-        var menu = sharp(imagesPath+"\\Background 8.png");
+        var menu = sharp(imagesPath+"\\8Background.png");
     }else if (n_items == 9) {
-        var menu = sharp(imagesPath+"\\Background 9.png");
+        var menu = sharp(imagesPath+"\\9Background.png");
     }
 
     const metadata = await menu.metadata();
