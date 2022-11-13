@@ -3,7 +3,7 @@ const fs = require('fs');
 const sharp = require("sharp");
 
 const itemsPath = path.join(__dirname, '../items');
-const imagesPath = path.join(__dirname, '../backgrounds');
+const imagesPath = path.join(__dirname, '../');
 
 const daysWeek = ['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
 
@@ -87,7 +87,7 @@ const produceMenu = async (items) => {
     if (n_items == 8) {
         var menu = sharp(imagesPath+"\\BackgroundOito.png");
     }else if (n_items == 9) {
-        var menu = sharp(imagesPath+"\\9BackgroundNove.png");
+        var menu = sharp(imagesPath+"\\BackgroundNove.png");
     }
 
     const metadata = await menu.metadata();
