@@ -249,9 +249,10 @@ const makeMenu = async (req, res) => {
     }
 
     items = getImages(items);
+
+    return res.status(200).json({message: "", menu: items});
     
-    //var final_menu = await produceMenu(items);
-    var final_menu = items[0].image;
+    var final_menu = await produceMenu(items);
 
     const img = Buffer.from(final_menu, 'base64');
 
