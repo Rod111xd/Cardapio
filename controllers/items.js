@@ -50,7 +50,6 @@ const getItems = () => {
 const getImages = (items) => {
 
     items.forEach((item, index) => {
-        console.log(itemsPath+"\\"+item.name+".png")
         items[index].image = sharp(itemsPath+"\\"+item.name+".png")
     });
 
@@ -250,10 +249,9 @@ const makeMenu = async (req, res) => {
     }
 
     items = getImages(items);
-
-    return res.status(200).json({message: "", menu: {}});
     
-    var final_menu = await produceMenu(items);
+    //var final_menu = await produceMenu(items);
+    var final_menu = items[0].image;
 
     const img = Buffer.from(final_menu, 'base64');
 
