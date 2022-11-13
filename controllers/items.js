@@ -50,6 +50,7 @@ const getItems = () => {
 const getImages = (items) => {
 
     items.forEach((item, index) => {
+        console.log(itemsPath+"\\"+item.name+".png")
         items[index].image = sharp(itemsPath+"\\"+item.name+".png")
     });
 
