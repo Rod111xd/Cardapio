@@ -86,9 +86,9 @@ const produceMenu = async (items) => {
 
     console.log(imagesPath+"/background_8.png")
     if (n_items == 8) {
-        
+        var menu = sharp(imagesPath+"\\background_8.png");
     }else if (n_items == 9) {
-        
+        var menu = sharp(imagesPath+"\\background_9.png");
     }
 
     const metadata = await menu.metadata();
@@ -249,14 +249,15 @@ const makeMenu = async (req, res) => {
     }
 
     items = getImages(items);
-
+    
+    //var final_menu = await produceMenu(items);
     var final_menu = items[0].image;
 
     const img = Buffer.from(final_menu, 'base64');
 
     res.writeHead(200, {
-    'Content-Type': 'image/png',
-    'Content-Length': img.length
+        'Content-Type': 'image/png',
+        'Content-Length': img.length
     });
 
     return res.end(img); 
