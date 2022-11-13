@@ -84,7 +84,7 @@ const produceMenu = async (items) => {
 
     var menu;
 
-    console.log(imagesPath+"/background_8.png")
+    console.log(imagesPath+"\\background_8.png")
     if (n_items == 8) {
         var menu = sharp(imagesPath+"\\background_8.png");
     }else if (n_items == 9) {
@@ -250,8 +250,6 @@ const makeMenu = async (req, res) => {
 
     items = getImages(items);
 
-    return res.status(200).json({message: "", menu: items});
-    
     var final_menu = await produceMenu(items);
 
     const img = Buffer.from(final_menu, 'base64');
