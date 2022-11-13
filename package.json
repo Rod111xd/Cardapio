@@ -1,0 +1,16 @@
+{
+  "name": "cardapio",
+  "version": "1.0.0",
+  "description": "App Cardapio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "author": "Rodrigo Silva",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sharp": "^0.31.2"
+  }
+}
