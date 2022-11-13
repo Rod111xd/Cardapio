@@ -40,6 +40,7 @@ const getItems = () => {
     var name_items = fs.readdirSync(itemsPath);
 
     name_items.forEach((file, index) => {
+        console.log(itemsPath+"\\"+item.name+".png")
         items.push({id: index, name: file.replace(/\.[^/.]+$/, "")})
     });
 
@@ -50,7 +51,6 @@ const getItems = () => {
 const getImages = (items) => {
 
     items.forEach((item, index) => {
-        console.log(itemsPath+"\\"+item.name+".png")
         items[index].image = sharp(itemsPath+"\\"+item.name+".png")
     });
 
@@ -85,11 +85,10 @@ const produceMenu = async (items) => {
 
     var menu;
 
-    console.log(imagesPath+"\\background_8.png")
     if (n_items == 8) {
-        var menu = sharp(imagesPath+"\\background_8.png");
+        var menu = sharp(imagesPath+"/background_8.png");
     }else if (n_items == 9) {
-        var menu = sharp(imagesPath+"\\background_9.png");
+        var menu = sharp(imagesPath+"/background_9.png");
     }
 
     const metadata = await menu.metadata();
