@@ -8,27 +8,27 @@ const imagesPath = path.join(__dirname, '../');
 const daysWeek = ['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
 
 const anchors_8 = [
-                    [0, 0.442, 0.237, 0.187, "12.5%", "68%", "70%", "72%"],
-                    [0.253, 0.442, 0.237, 0.187, "37.5%", "68%", "70%", "72%"],
-                    [0.508, 0.442, 0.237, 0.187, "62.5%", "68%", "70%", "72%"],
-                    [0.763, 0.442, 0.237, 0.187, "87.5%", "68%", "70%", "72%"],
-                    [0, 0.721, 0.237, 0.187, "12.5%", "96%", "98%", "100%"],
-                    [0.253, 0.721, 0.237, 0.187, "37.5%", "96%", "98%", "100%"],
-                    [0.508, 0.721, 0.237, 0.187, "62.5%", "96%", "98%", "100%"],
-                    [0.763, 0.721, 0.237, 0.187, "87.5%", "96%", "98%", "100%"]
+                    [0, 0.442, 0.237, 0.187, "12.5%"],
+                    [0.253, 0.442, 0.237, 0.187, "37.5%"],
+                    [0.508, 0.442, 0.237, 0.187, "62.5%"],
+                    [0.763, 0.442, 0.237, 0.187, "87.5%"],
+                    [0, 0.721, 0.237, 0.187, "12.5%"],
+                    [0.253, 0.721, 0.237, 0.187, "37.5%"],
+                    [0.508, 0.721, 0.237, 0.187, "62.5%"],
+                    [0.763, 0.721, 0.237, 0.187, "87.5%"]
                 ];
 
 const anchors_9 = [
-                    [0, 0.442, 0.237, 0.187, "12.5%", "68%", "70%", "72%"],
-                    [0.253, 0.442, 0.237, 0.187, "37.5%", "68%", "70%", "72%"],
-                    [0.508, 0.442, 0.237, 0.187, "62.5%", "68%", "70%", "72%"],
-                    [0.763, 0.442, 0.237, 0.187, "87.5%", "68%", "70%", "72%"],
+                    [0, 0.442, 0.237, 0.187, "12.5%"],
+                    [0.253, 0.442, 0.237, 0.187, "37.5%"],
+                    [0.508, 0.442, 0.237, 0.187, "62.5%"],
+                    [0.763, 0.442, 0.237, 0.187, "87.5%"],
 
-                    [0, 0.737, 0.187, 0.179, "10%", "96%", "98%", "100%"],
-                    [0.203, 0.737, 0.187, 0.179, "30%", "96%", "98%", "100%"],
-                    [0.406, 0.737, 0.187, 0.179, "50%", "96%", "98%", "100%"],
-                    [0.61, 0.737, 0.187, 0.179, "70%", "96%", "98%", "100%"],
-                    [0.813, 0.737, 0.187, 0.179, "90%", "96%", "98%", "100%"]
+                    [0, 0.737, 0.187, 0.179, "10%"],
+                    [0.203, 0.737, 0.187, 0.179, "30%"],
+                    [0.406, 0.737, 0.187, 0.179, "50%"],
+                    [0.61, 0.737, 0.187, 0.179, "70%"],
+                    [0.813, 0.737, 0.187, 0.179, "90%"]
                 ];
 
 const MAX_CHARS_8 = 15;
@@ -85,6 +85,32 @@ const formatDate = (nmb) => {
     }else {
         return nmb.toString();
     }
+}
+
+const positionItemText = (nLines, isUpper) => {
+
+    var positions;
+
+    if (isUpper) {
+        if (nLines == 1) {
+            positions = ["69%"];
+        }else if(nLines == 2) {
+            positions = ["68%", "70%"];
+        }else {
+            positions = ["67%", "69%", "71%"];
+        }
+    }else {
+        if (nLines == 1) {
+            positions = ["97%"];
+        }else if(nLines == 2) {
+            positions = ["96%", "98%"];
+        }else {
+            positions = ["95%", "97%", "99%"];
+        }
+    }
+
+    return positions;
+
 }
 
 const produceMenu = async (items) => {
@@ -148,19 +174,21 @@ const produceMenu = async (items) => {
             );
             
             if (item.name != "Vazio") {
+
+                const positionsIT = positionItemText(itemName.length, index < 4);
                 
                 itemName.forEach((line, index_line) => {
                     if (index_line==0) {
                         textSvg += `
-                            <text x="${anchors_8[index][4]}" y="${anchors_8[index][5]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_8[index][4]}" y="${positionsIT[0]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }else if (index_line==1){
                         textSvg += `
-                            <text x="${anchors_8[index][4]}" y="${anchors_8[index][6]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_8[index][4]}" y="${positionsIT[1]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }else {
                         textSvg += `
-                            <text x="${anchors_8[index][4]}" y="${anchors_8[index][7]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_8[index][4]}" y="${positionsIT[2]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }
                 });
@@ -180,19 +208,21 @@ const produceMenu = async (items) => {
             );
 
             if (item.name != "Vazio") {
+
+                const positionsIT = positionItemText(itemName.length, index < 4);
                 
                 itemName.forEach((line, index_line) => {
                     if (index_line==0) {
                         textSvg += `
-                            <text x="${anchors_9[index][4]}" y="${anchors_9[index][5]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_9[index][4]}" y="${positionsIT[0]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }else if(index_line==1) {
                         textSvg += `
-                            <text x="${anchors_9[index][4]}" y="${anchors_9[index][6]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_9[index][4]}" y="${positionsIT[1]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }else {
                         textSvg += `
-                            <text x="${anchors_9[index][4]}" y="${anchors_9[index][7]}" text-anchor="middle" class="itemName">${line}</text>
+                            <text x="${anchors_9[index][4]}" y="${positionsIT[2]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }
                 });
