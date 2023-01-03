@@ -79,6 +79,14 @@ const breakNameLines = (name, n_items) => {
     return final_name.split("\n");
 }
 
+const formatDate = (nmb) => {
+    if (nmb < 10) {
+        return "0" + nmb.toString();
+    }else {
+        return nmb.toString();
+    }
+}
+
 const produceMenu = async (items) => {
 
     const n_items = items.length;
@@ -100,7 +108,7 @@ const produceMenu = async (items) => {
     const day = date.getDate();
     const month = date.getMonth()+1;
 
-    const dayText = day + "/" + month;
+    const dayText = formatDate(day) + "/" + formatDate(month);
     const weekDay = daysWeek[date.getDay()];
 
     var textSvg = `
