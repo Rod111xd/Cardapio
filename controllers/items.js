@@ -263,10 +263,10 @@ const fetchItems = (req, res) => {
 const makeMenu = async (req, res) => {
 
     const id_items = req.body.items;
-
+    /* 
     if (id_items.length < 8 || id_items.length > 9) {
         return res.status(400).json({message: "Número de itens incorreto"});
-    }
+    } */
 
     var items_original = getItems();
 
