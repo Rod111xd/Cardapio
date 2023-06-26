@@ -39,17 +39,19 @@ var id_Vazio = 200;
 
 const getItems = () => {
 
-    var name_items = fs.readdirSync(itemsPath);
+    if (items_global.length == 0) {
+        var name_items = fs.readdirSync(itemsPath);
 
-    var n = "";
-    name_items.forEach((file, index) => {
-        n = file.replace(/\.[^/.]+$/, "");
-        if (n == "Vazio") {
-            id_Vazio = index;
-        }
-        items_global.push({id: index, name: n})
-    });
-
+        var n = "";
+        name_items.forEach((file, index) => {
+            n = file.replace(/\.[^/.]+$/, "");
+            if (n == "Vazio") {
+                id_Vazio = index;
+            }
+            items_global.push({id: index, name: n})
+        });
+    }
+    
 }
 
 const getImages = (items) => {
@@ -259,8 +261,6 @@ const produceMenu = async (items) => {
 
 const fetchItems = (req, res) => {
 
-    //var items = getItems();
-
     return res.status(200).json({items: items_global}); 
     
 };
@@ -273,7 +273,6 @@ const makeMenu = async (req, res) => {
         return res.status(400).json({message: "Número de itens incorreto"});
     }
 
-    //var items_original = getItems();
     var items_original = [...items_global];
 
     var pan_carneiro = items_original.filter(function(item)
@@ -304,8 +303,6 @@ const makeMenu = async (req, res) => {
     });
 
     return res.end(img); 
-    
-    //return res.status(200).json({message: "", menu: final_menu});
 
 }
 
