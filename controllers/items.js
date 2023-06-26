@@ -34,16 +34,21 @@ const anchors_9 = [
 const MAX_CHARS_8 = 15;
 const MAX_CHARS_9 = 13;
 
+var items_global = [];
+var id_Vazio = 200;
+
 const getItems = () => {
 
-    var items = [];
     var name_items = fs.readdirSync(itemsPath);
 
+    var n = "";
     name_items.forEach((file, index) => {
-        items.push({id: index, name: file.replace(/\.[^/.]+$/, "")})
+        n = file.replace(/\.[^/.]+$/, "");
+        if (n == "Vazio") {
+            id_Vazio = index;
+        }
+        items_global.push({id: index, name: n})
     });
-
-    return items;
 
 }
 
@@ -254,21 +259,22 @@ const produceMenu = async (items) => {
 
 const fetchItems = (req, res) => {
 
-    var items = getItems();
+    //var items = getItems();
 
-    return res.status(200).json({items: items}); 
+    return res.status(200).json({items: items_global}); 
     
 };
 
 const makeMenu = async (req, res) => {
 
     const id_items = req.body.items;
-    /* 
-    if (id_items.length < 8 || id_items.length > 9) {
+    
+    if (id_items.length > 7) {
         return res.status(400).json({message: "Número de itens incorreto"});
-    } */
+    }
 
-    var items_original = getItems();
+    //var items_original = getItems();
+    var items_original = [...items_global];
 
     var pan_carneiro = items_original.filter(function(item)
     {
@@ -283,7 +289,7 @@ const makeMenu = async (req, res) => {
     items = pan_carneiro.concat(items);
 
     while(items.length < 8) {
-        items.push({id: 73, name: 'Vazio'});
+        items.push({id: id_Vazio, name: 'Vazio'});
     }
 
     items = getImages(items);
@@ -302,5 +308,7 @@ const makeMenu = async (req, res) => {
     //return res.status(200).json({message: "", menu: final_menu});
 
 }
+
+getItems();
 
 module.exports = { fetchItems, makeMenu }
