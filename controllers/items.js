@@ -306,7 +306,7 @@ const makeMenu = async (req, res) => {
 
 }
 
-const lastMenu = (req, res) => {
+const lastMenu = async (req, res) => {
 
     var menu = sharp(imagesPath+"BackgroundOito.png");
 
