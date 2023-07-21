@@ -295,7 +295,7 @@ const makeMenu = async (req, res) => {
 
     var final_menu = await produceMenu(items);
 
-    fs.writeFileSync(imagesPath +  'menu.png', final_menu);
+    //fs.writeFileSync(imagesPath +  'menu.png', final_menu);
 
     const img = Buffer.from(final_menu, 'base64');
 
