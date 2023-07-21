@@ -306,6 +306,20 @@ const makeMenu = async (req, res) => {
 
 }
 
+const lastMenu = (req, res) => {
+
+    var menu = sharp(imagesPath+"BackgroundOito.png");
+
+    const img = Buffer.from(menu.toBuffer(), 'base64');
+
+    res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': img.length
+    });
+
+    return res.end(img);  
+};
+
 getItems();
 
 module.exports = { fetchItems, makeMenu }
