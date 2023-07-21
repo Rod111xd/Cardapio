@@ -255,7 +255,7 @@ const produceMenu = async (items) => {
 
     menu = menu.composite(composites);
 
-    await menu.toFile('menu.png');
+    await menu.toFile(imagesPath + 'menu.png');
 
     return menu.toBuffer();
 
