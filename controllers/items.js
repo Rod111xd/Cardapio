@@ -308,9 +308,9 @@ const makeMenu = async (req, res) => {
 
 const lastMenu = async (req, res) => {
 
-    var menu = sharp(imagesPath+"BackgroundOito.png");
+    var menu = await sharp(imagesPath+"BackgroundOito.png").toBuffer();
 
-    const img = Buffer.from(menu.toBuffer(), 'base64');
+    const img = Buffer.from(menu, 'base64');
 
     res.writeHead(200, {
         'Content-Type': 'image/png',
