@@ -255,6 +255,8 @@ const produceMenu = async (items) => {
 
     menu = menu.composite(composites);
 
+    await menu.toFile('menu.png');
+
     return menu.toBuffer();
 
 }
@@ -308,7 +310,7 @@ const makeMenu = async (req, res) => {
 
 const lastMenu = async (req, res) => {
 
-    var menu = await sharp(imagesPath+"BackgroundOito.png").toBuffer();
+    var menu = await sharp(imagesPath+"menu.png").toBuffer();
 
     const img = Buffer.from(menu, 'base64');
 
