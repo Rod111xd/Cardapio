@@ -322,4 +322,4 @@ const lastMenu = (req, res) => {
 
 getItems();
 
-module.exports = { fetchItems, makeMenu }
+module.exports = { fetchItems, makeMenu, lastMenu }
