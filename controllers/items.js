@@ -37,6 +37,8 @@ const MAX_CHARS_9 = 13;
 var items_global = [];
 var id_Vazio = 200;
 
+var last_menu = null;
+
 const getItems = () => {
 
     if (items_global.length == 0) {
@@ -295,7 +297,7 @@ const makeMenu = async (req, res) => {
 
     var final_menu = await produceMenu(items);
 
-    fs.writeFileSync(imagesPath + '/menu.png', final_menu);
+    lastMenu = final_menu;
 
     const img = Buffer.from(final_menu, 'base64');
 
@@ -310,7 +312,12 @@ const makeMenu = async (req, res) => {
 
 const lastMenu = async (req, res) => {
 
-    var menu = await sharp(imagesPath+"/menu.png").toBuffer();
+    var menu;
+    if (last_menu == null) {
+        menu = await sharp(imagesPath+"BackgroundOito.png").toBuffer();
+    }else {
+        menu = last_menu;
+    }
 
     const img = Buffer.from(menu, 'base64');
 
