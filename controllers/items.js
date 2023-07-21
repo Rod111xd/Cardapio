@@ -37,7 +37,7 @@ const MAX_CHARS_9 = 13;
 var items_global = [];
 var id_Vazio = 200;
 
-var last_menu = null;
+let last_menu = null;
 
 const getItems = () => {
 
