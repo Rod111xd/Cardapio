@@ -297,7 +297,7 @@ const makeMenu = async (req, res) => {
 
     var final_menu = await produceMenu(items);
 
-    lastMenu = final_menu;
+    last_menu = final_menu;
 
     const img = Buffer.from(final_menu, 'base64');
 
