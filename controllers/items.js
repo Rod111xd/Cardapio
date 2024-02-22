@@ -7,11 +7,13 @@ const imagesPath = path.join(__dirname, '../');
 
 const daysWeek = ['DOMINGO','SEGUNDA','TERÇA','QUARTA','QUINTA','SEXTA','SÁBADO'];
 
+// [ LEFT, TOP, WIDTH, HEIGHT, X_TEXTO]
 const anchors_8 = [
                     [0, 0.442, 0.237, 0.187, "12.5%"],
                     [0.253, 0.442, 0.237, 0.187, "37.5%"],
                     [0.508, 0.442, 0.237, 0.187, "62.5%"],
                     [0.763, 0.442, 0.237, 0.187, "87.5%"],
+
                     [0, 0.721, 0.237, 0.187, "12.5%"],
                     [0.253, 0.721, 0.237, 0.187, "37.5%"],
                     [0.508, 0.721, 0.237, 0.187, "62.5%"],
@@ -23,6 +25,20 @@ const anchors_9 = [
                     [0.253, 0.442, 0.237, 0.187, "37.5%"],
                     [0.508, 0.442, 0.237, 0.187, "62.5%"],
                     [0.763, 0.442, 0.237, 0.187, "87.5%"],
+
+                    [0, 0.737, 0.187, 0.179, "10%"],
+                    [0.203, 0.737, 0.187, 0.179, "30%"],
+                    [0.406, 0.737, 0.187, 0.179, "50%"],
+                    [0.61, 0.737, 0.187, 0.179, "70%"],
+                    [0.813, 0.737, 0.187, 0.179, "90%"]
+                ];
+
+const anchors_10 = [
+                    [0, 0.457, 0.187, 0.179, "10%"],
+                    [0.203, 0.457, 0.187, 0.179, "30%"],
+                    [0.406, 0.457, 0.187, 0.179, "50%"],
+                    [0.61, 0.457, 0.187, 0.179, "70%"],
+                    [0.813, 0.457, 0.187, 0.179, "90%"],
 
                     [0, 0.737, 0.187, 0.179, "10%"],
                     [0.203, 0.737, 0.187, 0.179, "30%"],
@@ -132,6 +148,8 @@ const produceMenu = async (items) => {
         var menu = sharp(imagesPath+"BackgroundOito.png");
     }else if (n_items == 9) {
         var menu = sharp(imagesPath+"BackgroundNove.png");
+    }else if (n_items == 10) {
+        var menu = sharp(imagesPath+"BackgroundDez.png");
     }
 
     const metadata = await menu.metadata();
@@ -203,7 +221,7 @@ const produceMenu = async (items) => {
                 });
             }
 
-        }else {
+        }else if (n_items == 9) {
 
             composites.push(
                 {
@@ -232,6 +250,40 @@ const produceMenu = async (items) => {
                     }else {
                         textSvg += `
                             <text x="${anchors_9[index][4]}" y="${positionsIT[2]}" text-anchor="middle" class="itemName">${line}</text>
+                        `;
+                    }
+                });
+            }
+
+        } else if (n_items == 10) {
+
+            composites.push(
+                {
+                  input: await item.image.resize({
+                    width: Math.ceil(anchors_10[index][2] * width),
+                    height: Math.ceil(anchors_10[index][3] * height)
+                  }).toBuffer(),
+                  top: Math.ceil(anchors_10[index][1] * height),
+                  left: Math.ceil(anchors_10[index][0] * width)
+                }
+            );
+
+            if (item.name != "Vazio") {
+
+                const positionsIT = positionItemText(itemName.length, index < 5);
+                
+                itemName.forEach((line, index_line) => {
+                    if (index_line==0) {
+                        textSvg += `
+                            <text x="${anchors_10[index][4]}" y="${positionsIT[0]}" text-anchor="middle" class="itemName">${line}</text>
+                        `;
+                    }else if(index_line==1) {
+                        textSvg += `
+                            <text x="${anchors_10[index][4]}" y="${positionsIT[1]}" text-anchor="middle" class="itemName">${line}</text>
+                        `;
+                    }else {
+                        textSvg += `
+                            <text x="${anchors_10[index][4]}" y="${positionsIT[2]}" text-anchor="middle" class="itemName">${line}</text>
                         `;
                     }
                 });
@@ -271,23 +323,21 @@ const makeMenu = async (req, res) => {
 
     const id_items = req.body.items;
     
-    if (id_items.length > 7) {
+    if (id_items.length > 10) {
         return res.status(400).json({message: "Número de itens incorreto"});
     }
 
     var items_original = [...items_global];
 
-    var pan_carneiro = items_original.filter(function(item)
-    {
-        return item.name == "Panelada" || item.name == "Carneiro Cozido";
-    });
-
     var items = items_original.filter(function(item)
     {
-        return id_items.includes(item.id) && item.name != "Panelada" && item.name != "Carneiro Cozido";
+        return id_items.includes(item.id) && (item.name == "Panelada" || item.name == "Carneiro Cozido");
     });
 
-    items = pan_carneiro.concat(items);
+    items = items.concat(items_original.filter(function(item)
+    {
+        return id_items.includes(item.id) && item.name != "Panelada" && item.name != "Carneiro Cozido";
+    }));
 
     while(items.length < 8) {
         items.push({id: id_Vazio, name: 'Vazio'});
